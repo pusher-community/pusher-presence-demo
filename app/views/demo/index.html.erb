@@ -1,0 +1,96 @@
+<script type="text/javascript" charset="utf-8">
+  $().ready(function(){
+    Pusher.log = function() {
+      if (window.console) window.console.log.apply(window.console, arguments);
+    };
+    
+    my_id = '<%= session[:session_id] %>'
+    var channel = socket.subscribe('presence-demo');
+    channel.bind('pusher:subscription_succeeded', function(member_list){
+      $('#presence').html('');
+      $.each(member_list, function(i, member){
+        add_member(member)
+      })
+    })
+  
+    channel.bind('pusher:member_removed', function(member){
+      $('#presence_'+member.user_id).remove();
+    })
+  
+    channel.bind('pusher:member_added', function(member){
+      add_member(member)
+    })
+
+  });
+  
+  function add_member(member) {
+    if (member.user_info.gravatar) {
+      content = '<img src="'+member.user_info.gravatar+'"/>'
+    } else {
+      content = 'unknown user'
+    }
+    if (my_id == member.user_id){
+      myClass = "me member"
+    } else {
+      myClass = 'member'
+    }
+    $('#presence').append('<p id="presence_'+member.user_id+'" class="'+myClass+'">' + content +'</p>');
+  }
+</script>
+<style type="text/css" media="screen">
+  #holder {
+    margin: 0 auto;
+    background: #eee;
+    padding: 30px;
+    width: 500px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 10px solid #444;
+  }
+  #presence{
+    width: 500px;
+    height: 500px;
+  }
+  .member{
+    float: left;
+    width: 70px;
+    background: #fff;
+    padding: 10px;
+    text-align: center;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin-right: 10px;
+  }
+  .me {
+    background: yellow;
+  }
+  .member img {
+    width: 70px;
+  }
+  * {
+    font-family: "arial";
+  }
+  #controls {
+    background: #999;
+    padding: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    text-align: center;
+  }
+</style>
+
+<div id="holder">
+  <div id="presence"></div>
+  <div id="controls">
+  <% if @identity.nil? %>
+    <h2>You are currently anonymous</h2>
+    <form action="/identity" method="POST">
+      <input name="email"/><br/>
+      <input type="submit" value="add your email to get a gravatar" />
+    </form>
+  <% else %>
+    <p><%= link_to 'remove yourself', identity_path, :method=> 'delete' %></p>
+  <% end %>
+  </div>
+</div>
+
