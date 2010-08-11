@@ -12,10 +12,9 @@ Rails::Initializer.run do |config|
   config.gem "gravatar-ultimate"
 end
 
-# staging account
-Pusher.app_id = 'your_id'
-Pusher.key = 'key'
-Pusher.secret = 'secret'
+Pusher.app_id = ENV['PUSHER_APP_ID']
+Pusher.key = ENV['PUSHER_KEY']
+Pusher.secret = ENV['PUSHER_SECRET']
 
 # not strictly necessary, but referenced in views
 PUSHER_JS_DOMAIN = 'http://js.pusherapp.com'
