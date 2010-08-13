@@ -42,7 +42,7 @@ $().ready(function(){
       bubble.fadeOut(function() {
         $(this).remove()
       })
-    }, 3000)
+    }, 30000)
   })
 });
 
