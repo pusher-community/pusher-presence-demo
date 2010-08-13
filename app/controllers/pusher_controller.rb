@@ -4,7 +4,6 @@ class PusherController < ApplicationController
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
       :user_id => session[:session_id],
       :user_info => identity ? {
-        :email =>  identity.email,
         :gravatar => identity.gravatar
       } : {}
     })
