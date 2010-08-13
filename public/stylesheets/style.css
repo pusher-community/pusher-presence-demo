@@ -6,9 +6,15 @@ body {
 }
 
 #header {
-  background: url("/images/pusher.png") no-repeat 20px 20px;
   height: 100px;
-  padding: 20px 20px 10px 185px;
+  padding: 20px 20px 10px;
+}
+#header .pusher {
+  float: left;
+  margin-right: 15px;
+}
+#header img {
+  border: none;
 }
 
 #controls {
@@ -16,7 +22,7 @@ body {
 }
 #controls h2 {
   font-size: 100%;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
 }
 #controls input[type=email] {
   font-size: 14px;
@@ -31,6 +37,7 @@ body {
 #presence div {
   background: #fff url("/images/question_mark.png") no-repeat center center;
   border: 1px solid #eee;
+  border-radius: 3px;
   display: block;
   float: left;
   height: 80px;
@@ -39,9 +46,9 @@ body {
   position: relative;
   text-align: center;
   width: 80px;
-  -moz-border-radius: 5px;
+  -moz-border-radius: 3px;
   -moz-box-shadow: 2px 2px 4px rgba(0,0,0, 0.3);
-  -webkit-border-radius: 2px;
+  -webkit-border-radius: 3px;
   -webkit-box-shadow: 1px 1px 4px rgba(0,0,0, 0.3);
 }
 #presence .me {
