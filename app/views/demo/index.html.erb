@@ -15,12 +15,11 @@
       <% form_for @identity, :html => { :method => :delete } do |f| %>
         <%= f.submit 'Remove my Gravatar' %>
       <% end %>
-      <form action="/messages" id="message" method="POST">
-        <input name="text" placeholder="Say something">
-        <input name="user_id" type="hidden" value="<%=h @identity.session_id %>">
-        <input type="submit" value="Send">
-      </form>
     <% end %>
+    <form action="/messages" id="message" method="POST">
+      <input name="text" placeholder="Say something">
+      <input type="submit" value="Send">
+    </form>
   </div>
 </div>
 
