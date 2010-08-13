@@ -1,22 +1,23 @@
 <html>
 <head>
-  <script src="<%= PUSHER_JS_DOMAIN %>/1.6/pusher.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" charset="utf-8">
-    Pusher.host = '<%= PUSHER_SOCKET_HOST %>';
-    
-    // bit of a hack
-    var socket = new Pusher('<%= Pusher.key %>');
-    
-    socket.bind('connection_established', function(evt){
-      jQuery.ajaxSetup({
-        data: {
-          socket_id: evt.socket_id
-        }
-      })
-    });
-    
-  </script>
+<%= stylesheet_link_tag 'style' %>
+<script src="<%= PUSHER_JS_DOMAIN %>/1.6/pusher.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="/javascripts/application.js"></script>
+<script>
+  Pusher.host = '<%= PUSHER_SOCKET_HOST %>';
+
+  var me = '<%= session[:session_id] %>'
+  var socket = new Pusher('<%= Pusher.key %>');
+
+  socket.bind('connection_established', function(evt){
+    jQuery.ajaxSetup({
+      data: {
+        socket_id: evt.socket_id
+      }
+    })
+  });
+</script>
 </head>
 <body>
   <%= yield %>
