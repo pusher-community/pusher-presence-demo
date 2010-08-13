@@ -5,13 +5,16 @@
 
   <div id="controls">
     <% if @identity.nil? %>
-      <h2>You are currently anonymous</h2>
-      <form action="/identity" method="POST">
+      <h2>You are currently <em>anonymous</em></h2>
+      <form action="/identity" id="email" method="POST">
         <input name="email" placeholder="Add your email to get a Gravatar" type="email">
         <input type="submit" value="Add my Gravatar">
       </form>
     <% else %>
-      <%= link_to 'remove yourself', identity_path, :method=> 'delete' %>
+      <h2>You're logged in as <em><%=h @identity.email %></em></h2>
+      <% form_for @identity, :html => { :method => :delete } do |f| %>
+        <%= f.submit 'Remove my Gravatar' %>
+      <% end %>
     <% end %>
   </div>
 </div>

@@ -21,13 +21,14 @@ body {
   padding: 15px 0 0;
 }
 #controls h2 {
+  color: #222;
   font-size: 100%;
-  margin: 0 0 2px;
+  margin: 0 0 3px;
 }
 #controls input[type=email] {
   font-size: 14px;
   margin-right: 5px;
-  padding: 3px;
+  padding: 4px;
   width: 240px;
 }
 
