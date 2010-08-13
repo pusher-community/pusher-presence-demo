@@ -3,6 +3,12 @@ Pusher.log = function() {
 };
 
 $().ready(function(){
+  $("#message").submit(function() {
+    $.post(this.action, $(this).serialize())
+    this.reset()
+    return false
+  })
+
   var channel = socket.subscribe('presence-demo');
   channel.bind('pusher:subscription_succeeded', function(member_list){
     $('#presence').empty()
@@ -21,12 +27,30 @@ $().ready(function(){
   channel.bind('pusher:member_added', function(member){
     add_member(member)
   })
+
+  channel.bind("message", function(data) {
+    var user = $("#presence_" + data.user_id)
+    var bubble = $("<div>", {
+      "class": "bubble",
+      text: data.text
+    })
+
+    user.find(".bubble").remove()
+    user.append(bubble)
+
+    setTimeout(function() {
+      bubble.fadeOut(function() {
+        $(this).remove()
+      })
+    }, 3000)
+  })
 });
 
 function add_member(member) {
   var content
   var rand = rand = (Math.random() * 20) - 10
   var container = $("<div>", {
+    "class": "member",
     id: "presence_" + member.user_id
   }).css({
     "-moz-transform": "rotate(" + rand + "deg)",

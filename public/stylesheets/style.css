@@ -35,7 +35,7 @@ body {
 #presence {
   padding: 15px 40px;
 }
-#presence div {
+#presence .member {
   background: #fff url("/images/question_mark.png") no-repeat center center;
   border: 1px solid #eee;
   border-radius: 3px;
@@ -59,6 +59,21 @@ body {
 #presence .no-gravatar {
   height: 40px;
   padding: 30px 10px;
+}
+#presence .bubble {
+  background: white;
+  border: 3px solid #333;
+  border-radius: 10px;
+  font-family: "Comic Sans", "Comic Sans MS", cursive;
+  padding: 2px 6px;
+  position: absolute;
+  right: -20px;
+  top: -10px;
+  max-width: 120px;
+  -moz-border-radius: 10px;
+  -moz-box-shadow: 2px 2px 4px rgba(0,0,0, 0.3);
+  -webkit-border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 4px rgba(0,0,0, 0.3);
 }
 
 #fork-me {
