@@ -1,6 +1,6 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resource :identity
-  map.resources :messages, :only => :create
-  map.root :controller => "demo"
-  map.connect('/pusher/auth', :controller => 'pusher', :action => 'auth')
+PusherPresenceDemo::Application.routes.draw do
+  resource :identity
+  resources :messages
+  match '/' => 'demo#index'
+  match '/pusher/auth' => 'pusher#auth'
 end

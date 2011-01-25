@@ -7,6 +7,6 @@ class PusherController < ApplicationController
         :gravatar => identity.gravatar
       } : {}
     })
-		render :json => response
+    render :json => response
   end
 end
