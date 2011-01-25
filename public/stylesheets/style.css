@@ -70,6 +70,7 @@ body {
   right: -20px;
   top: -10px;
   max-width: 120px;
+  word-wrap: break-word;
   -moz-border-radius: 10px;
   -moz-box-shadow: 2px 2px 4px rgba(0,0,0, 0.3);
   -webkit-border-radius: 10px;
