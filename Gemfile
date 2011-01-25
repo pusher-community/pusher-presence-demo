@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.0.0'
+gem 'railties', '~> 3.0.0'
+gem 'activerecord', '~> 3.0.0'
 gem 'pusher'
 gem 'gravatar-ultimate'
 
