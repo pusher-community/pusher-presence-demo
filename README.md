@@ -2,4 +2,4 @@
 
 Short and sweet example of how authentication and presence events hook together. 
 
-Be sure to change the credentials in environment.rb before attempting to run the app.
+Before running locally, add some Pusher credentials to `config/environments/development.rb`.
