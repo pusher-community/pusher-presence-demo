@@ -11,8 +11,8 @@
         <input type="submit" value="Add my Gravatar">
       </form>
     <% else %>
-      <h2>You're logged in as <em><%=h @identity.email %></em></h2>
-      <%= form_for @identity, :html => { :method => :delete } do |f| %>
+      <h2>You're logged in as <em><%=h @identity[:email] %></em></h2>
+      <%= form_for :identity, :url => identity_path, :html => { :method => :delete } do |f| %>
         <%= f.submit 'Remove my Gravatar' %>
       <% end %>
     <% end %>

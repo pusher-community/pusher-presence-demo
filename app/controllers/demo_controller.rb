@@ -1,5 +1,5 @@
 class DemoController < ApplicationController
   def index
-    @identity = Identity.find_by_session_id(session[:session_id])
+    @identity = session[:identity]
   end
 end
