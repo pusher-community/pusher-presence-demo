@@ -9,23 +9,25 @@ $().ready(function(){
     return false
   })
 
-  var channel = socket.subscribe('presence-demo');
-  channel.bind('pusher:subscription_succeeded', function(member_list){
+  channel = socket.subscribe('presence-demo');
+  channel.bind('pusher:subscription_succeeded', function(members){
     $('#presence').empty()
 
     var container, rand
 
-    $.each(member_list, function(i, member){
-      add_member(member)
-    })
+    members.each(add_member);
+
+    console.log("Count", members.count)
   })
 
   channel.bind('pusher:member_removed', function(member){
-    $('#presence_'+member.user_id).remove();
+    $('#presence_'+member.id).remove();
+    console.log("Count", channel.members.count)
   })
 
   channel.bind('pusher:member_added', function(member){
     add_member(member)
+    console.log("Count", channel.members.count)
   })
 
   channel.bind("message", function(data) {
@@ -51,25 +53,25 @@ function add_member(member) {
   var rand = rand = (Math.random() * 20) - 10
   var container = $("<div>", {
     "class": "member",
-    id: "presence_" + member.user_id
+    id: "presence_" + member.id
   }).css({
     "-moz-transform": "rotate(" + rand + "deg)",
     "-webkit-transform": "rotate(" + rand + "deg)"
   })
 
-  if (member.user_info.gravatar) {
+  if (member.info.gravatar) {
     content = $("<img>", {
-      src: member.user_info.gravatar,
+      src: member.info.gravatar,
       valign: "middle"
     })
-  } else if (member.user_id == me) {
+  } else if (member.id == me) {
     container.addClass("no-gravatar")
     content = 'you are here'
   } else {
     content = null
   }
 
-  if (member.user_id == me) container.addClass("me")
+  if (member.id == me) container.addClass("me")
 
   $('#presence').append(container.html(content))
 }
