@@ -30,6 +30,7 @@ $().ready(function(){
       text: text
     })
     show_message(me, text)
+    stop_typing(me)
     this.reset()
     return false
   })
@@ -54,7 +55,7 @@ $().ready(function(){
       channel.trigger('client-stoptyping', {})
       clearInterval(typing)
       typing = null
-    }, 1000)
+    }, 3000)
   })
   
   channel.bind('client-starttyping', function(data) {
@@ -112,14 +113,16 @@ function show_message(user_id, message) {
   }, 30000)
 }
 
-var animation
-var animation_counter = 0
+var animations = {}
+var animation_counters = {}
 
 function start_typing(user_id) {
-  animation = setInterval(function() {
-    animation_counter++
+  animations[user_id] = setInterval(function() {
+    console.log(animation_counters)
+    animation_counters[user_id] = animation_counters[user_id] || 0
+    animation_counters[user_id]++
     
-    var rotation = (animation_counter % 2 - 0.5) * 10
+    var rotation = (animation_counters[user_id] % 2 - 0.5) * 10
     $("#presence_" + user_id).css({
       "-webkit-transform": "rotate(" + rotation + "deg)"
     })
@@ -128,5 +131,5 @@ function start_typing(user_id) {
 }
 
 function stop_typing(user_id) {
-  clearInterval(animation)
+  clearInterval(animations[user_id])
 }
