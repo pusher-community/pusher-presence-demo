@@ -29,25 +29,13 @@ $().ready(function(){
     channel.trigger('client-message', {
       text: text
     })
+    show_message(me, text)
     this.reset()
     return false
   })
 
   channel.bind("client-message", function(data) {
-    var user = $("#presence_" + data.user_id)
-    var bubble = $("<div>", {
-      "class": "bubble",
-      text: data.text
-    })
-
-    user.find(".bubble").remove()
-    user.append(bubble)
-
-    setTimeout(function() {
-      bubble.fadeOut(function() {
-        $(this).remove()
-      })
-    }, 30000)
+    show_message(data.user_id, data.text)
   })
 });
 
@@ -77,4 +65,21 @@ function add_member(member) {
   if (member.id == me) container.addClass("me")
 
   $('#presence').append(container.html(content))
+}
+
+function show_message(user_id, message) {
+  var user = $("#presence_" + user_id)
+  var bubble = $("<div>", {
+    "class": "bubble",
+    text: message
+  })
+
+  user.find(".bubble").remove()
+  user.append(bubble)
+
+  setTimeout(function() {
+    bubble.fadeOut(function() {
+      $(this).remove()
+    })
+  }, 30000)
 }
