@@ -3,12 +3,6 @@ Pusher.log = function() {
 };
 
 $().ready(function(){
-  $("#message").submit(function() {
-    $.post(this.action, $(this).serialize())
-    this.reset()
-    return false
-  })
-
   channel = socket.subscribe('presence-demo');
   channel.bind('pusher:subscription_succeeded', function(members){
     $('#presence').empty()
@@ -30,7 +24,16 @@ $().ready(function(){
     console.log("Count", channel.members.count)
   })
 
-  channel.bind("message", function(data) {
+  $("#message").submit(function() {
+    text = $(this).find("input[name=text]").val()
+    channel.trigger('client-message', {
+      text: text
+    })
+    this.reset()
+    return false
+  })
+
+  channel.bind("client-message", function(data) {
     var user = $("#presence_" + data.user_id)
     var bubble = $("<div>", {
       "class": "bubble",
