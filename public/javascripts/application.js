@@ -37,6 +37,33 @@ $().ready(function(){
   channel.bind("client-message", function(data) {
     show_message(data.user_id, data.text)
   })
+  
+  // var typing = false;
+  var typing;
+  
+  $("#message input[name=text]").keydown(function() {
+    if (typing) {
+      clearInterval(typing)
+    } else {
+      start_typing(me)
+      channel.trigger('client-starttyping', {})
+    }
+
+    typing = setTimeout(function() {
+      stop_typing(me)
+      channel.trigger('client-stoptyping', {})
+      clearInterval(typing)
+      typing = null
+    }, 1000)
+  })
+  
+  channel.bind('client-starttyping', function(data) {
+    start_typing(data.user_id)
+  })
+  
+  channel.bind('client-stoptyping', function(data) {
+    stop_typing(data.user_id)
+  })
 });
 
 function add_member(member) {
@@ -47,7 +74,8 @@ function add_member(member) {
     id: "presence_" + member.id
   }).css({
     "-moz-transform": "rotate(" + rand + "deg)",
-    "-webkit-transform": "rotate(" + rand + "deg)"
+    "-webkit-transform": "rotate(" + rand + "deg)",
+    "-webkit-transition": "all 0.2s ease-in-out"
   })
 
   if (member.info.gravatar) {
@@ -82,4 +110,23 @@ function show_message(user_id, message) {
       $(this).remove()
     })
   }, 30000)
+}
+
+var animation
+var animation_counter = 0
+
+function start_typing(user_id) {
+  animation = setInterval(function() {
+    animation_counter++
+    
+    var rotation = (animation_counter % 2 - 0.5) * 10
+    $("#presence_" + user_id).css({
+      "-webkit-transform": "rotate(" + rotation + "deg)"
+    })
+  }, 100)
+  
+}
+
+function stop_typing(user_id) {
+  clearInterval(animation)
 }
