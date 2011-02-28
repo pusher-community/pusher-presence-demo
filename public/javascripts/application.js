@@ -4,8 +4,17 @@ Pusher.log = function() {
 
 $().ready(function(){
   $("#message").submit(function() {
-    $.post(this.action, $(this).serialize())
+    var message = $('#message > input').val()
     this.reset()
+
+    speak(me, message)
+
+    var params = $.param({
+      text: message,
+      socket_id: socket.socket_id
+    })
+    $.post(this.action, params)
+
     return false
   })
 

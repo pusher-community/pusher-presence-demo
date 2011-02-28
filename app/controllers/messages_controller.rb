@@ -6,12 +6,12 @@ class MessagesController < ApplicationController
       Pusher['presence-demo'].trigger_async('message', {
         :user_id => session[:session_id],
         :text => params[:text]
-      })
+      }, params[:socket_id])
     else
       Pusher['presence-demo'].trigger('message', {
         :user_id => session[:session_id],
         :text => params[:text]
-      })
+      }, params[:socket_id])
     end
     head :ok
   end
