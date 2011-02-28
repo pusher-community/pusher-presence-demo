@@ -10,14 +10,6 @@
 
   var me = '<%= session[:session_id] %>'
   var socket = new Pusher('<%= Pusher.key %>');
-
-  socket.bind('connection_established', function(evt){
-    jQuery.ajaxSetup({
-      data: {
-        socket_id: evt.socket_id
-      }
-    })
-  });
 </script>
 </head>
 <body>
