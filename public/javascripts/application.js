@@ -13,15 +13,13 @@ $().ready(function(){
   channel.bind('pusher:subscription_succeeded', function(members){
     $('#presence').empty()
 
-    var container, rand
-
     members.each(add_member);
 
     console.log("Count", members.count)
   })
 
   channel.bind('pusher:member_removed', function(member){
-    $('#presence_'+member.id).remove();
+    $('#presence_' + member.id).remove();
     console.log("Count", channel.members.count)
   })
 
@@ -31,20 +29,7 @@ $().ready(function(){
   })
 
   channel.bind("message", function(data) {
-    var user = $("#presence_" + data.user_id)
-    var bubble = $("<div>", {
-      "class": "bubble",
-      text: data.text
-    })
-
-    user.find(".bubble").remove()
-    user.append(bubble)
-
-    setTimeout(function() {
-      bubble.fadeOut(function() {
-        $(this).remove()
-      })
-    }, 30000)
+    speak(data.user_id, data.text)
   })
 });
 
@@ -74,4 +59,21 @@ function add_member(member) {
   if (member.id == me) container.addClass("me")
 
   $('#presence').append(container.html(content))
+}
+
+function speak(user_id, text) {
+  var user = $("#presence_" + user_id)
+  var bubble = $("<div>", {
+    "class": "bubble",
+    text: text
+  })
+
+  user.find(".bubble").remove()
+  user.append(bubble)
+
+  setTimeout(function() {
+    bubble.fadeOut(function() {
+      $(this).remove()
+    })
+  }, 30000)
 }
