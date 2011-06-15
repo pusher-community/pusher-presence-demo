@@ -25,7 +25,8 @@ $().ready(function(){
   $("#message").submit(function() {
     text = $(this).find("input[name=text]").val()
     channel.trigger('client-message', {
-      text: text
+      text: text,
+      user_id: me,
     })
     speak(me, text)
     stop_typing(me)
@@ -45,12 +46,12 @@ $().ready(function(){
       clearInterval(typing)
     } else {
       start_typing(me)
-      channel.trigger('client-starttyping', {})
+      channel.trigger('client-starttyping', {user_id: me})
     }
 
     typing = setTimeout(function() {
       stop_typing(me)
-      channel.trigger('client-stoptyping', {})
+      channel.trigger('client-stoptyping', {user_id: me})
       clearInterval(typing)
       typing = null
     }, 3000)
