@@ -6,17 +6,10 @@
 <script src="/javascripts/application.js"></script>
 <script>
   Pusher.host = '<%= PUSHER_SOCKET_HOST %>';
+  Pusher.ws_port = <%= PUSHER_WS_PORT %>;
 
   var me = '<%= session[:session_id] %>'
   var socket = new Pusher('<%= Pusher.key %>');
-
-  socket.bind('connection_established', function(evt){
-    jQuery.ajaxSetup({
-      data: {
-        socket_id: evt.socket_id
-      }
-    })
-  });
 </script>
 </head>
 <body>

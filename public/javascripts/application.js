@@ -7,15 +7,13 @@ $().ready(function(){
   channel.bind('pusher:subscription_succeeded', function(members){
     $('#presence').empty()
 
-    var container, rand
-
     members.each(add_member);
 
     console.log("Count", members.count)
   })
 
   channel.bind('pusher:member_removed', function(member){
-    $('#presence_'+member.id).remove();
+    $('#presence_' + member.id).remove();
     console.log("Count", channel.members.count)
   })
 
@@ -29,14 +27,14 @@ $().ready(function(){
     channel.trigger('client-message', {
       text: text
     })
-    show_message(me, text)
+    speak(me, text)
     stop_typing(me)
     this.reset()
     return false
   })
 
   channel.bind("client-message", function(data) {
-    show_message(data.user_id, data.text)
+    speak(data.user_id, data.text)
   })
   
   // var typing = false;
@@ -96,11 +94,11 @@ function add_member(member) {
   $('#presence').append(container.html(content))
 }
 
-function show_message(user_id, message) {
+function speak(user_id, text) {
   var user = $("#presence_" + user_id)
   var bubble = $("<div>", {
     "class": "bubble",
-    text: message
+    text: text
   })
 
   user.find(".bubble").remove()
