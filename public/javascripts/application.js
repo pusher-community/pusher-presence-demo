@@ -96,6 +96,7 @@ function add_member(member) {
 }
 
 function speak(user_id, text) {
+  console.log("User", user_id, "says", text)
   var user = $("#presence_" + user_id)
   var bubble = $("<div>", {
     "class": "bubble",
@@ -117,7 +118,6 @@ var animation_counters = {}
 
 function start_typing(user_id) {
   animations[user_id] = setInterval(function() {
-    console.log(animation_counters)
     animation_counters[user_id] = animation_counters[user_id] || 0
     animation_counters[user_id]++
     
