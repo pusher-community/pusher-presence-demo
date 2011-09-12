@@ -44,6 +44,8 @@ GEM
       eventmachine
     erubis (2.7.0)
     eventmachine (1.0.0.beta.3)
+    execjs (1.2.4)
+      multi_json (~> 1.0)
     gravatar-ultimate (1.0.2)
       sc-core-ext (>= 1.2.0)
     hike (1.2.1)
@@ -55,6 +57,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     multi_json (1.0.3)
+    pg (0.11.0)
     polyglot (0.3.2)
     pusher (0.8.2)
       crack (~> 0.1.0)
@@ -103,6 +106,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.29)
+    uglifier (1.0.3)
+      execjs (>= 0.3.0)
+      multi_json (>= 1.0.2)
 
 PLATFORMS
   ruby
@@ -110,6 +116,8 @@ PLATFORMS
 DEPENDENCIES
   em-http-request
   gravatar-ultimate
+  pg
   pusher
   rails (~> 3.1.0)
   sqlite3
+  uglifier
