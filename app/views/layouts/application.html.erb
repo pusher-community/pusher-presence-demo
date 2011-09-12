@@ -1,9 +1,11 @@
+<!DOCTYPE html>
 <html>
 <head>
-<%= stylesheet_link_tag 'style' %>
-<script src="<%= PUSHER_JS_DOMAIN %>/1.9/pusher.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script src="/javascripts/application.js"></script>
+  <title>Pusher presence demo</title>
+  <%= stylesheet_link_tag    "application" %>
+  <script src="<%= PUSHER_JS_DOMAIN %>/1.9/pusher.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <%= javascript_include_tag "application" %>
 <script>
   Pusher.host = '<%= PUSHER_SOCKET_HOST %>';
   Pusher.ws_port = <%= PUSHER_WS_PORT %>;
