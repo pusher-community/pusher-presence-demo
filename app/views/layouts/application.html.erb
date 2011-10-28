@@ -2,8 +2,14 @@
 <html>
 <head>
   <title>Pusher presence demo</title>
-  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag "application" %>
+
+<% if @use_local_js %>
+  <script src="http://localhost:5555/pusher.js"></script>
+<% else %>
   <script src="<%= PUSHER_JS_DOMAIN %>/1.9/pusher.min.js"></script>
+<% end %>
+
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <%= javascript_include_tag "application" %>
 <script>
