@@ -1,3 +1,5 @@
+//= require_tree .
+
 Pusher.log = function() {
   if (window.console) window.console.log.apply(window.console, arguments);
 };
