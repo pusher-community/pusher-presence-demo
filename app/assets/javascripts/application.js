@@ -121,17 +121,18 @@ function speak(user_id, text) {
   }, 30000)
 }
 
-var animation = null;
-var animation_counter = 0;
+var animation = {};
 
 function startAnimation(user_id) {
-  if (animation) {
-    clearInterval(animation);
+  animation[user_id] = animation[user_id] || {}
+  if (animation[user_id].timer) {
+    clearInterval(animation[user_id].timer);
   }
-  animation = setInterval(function() {
-    animation_counter++;
+  animation[user_id].timer = setInterval(function() {
+    animation[user_id].counter = animation[user_id].counter || 0;
+    animation[user_id].counter++;
 
-    var rotation = (animation_counter % 2 - 0.5) * 10
+    var rotation = (animation[user_id].counter % 2 - 0.5) * 10
     $("#presence_" + user_id).css({
       "-webkit-transform": "rotate(" + rotation + "deg)"
     });
@@ -139,5 +140,6 @@ function startAnimation(user_id) {
 };
 
 function stopAnimation(user_id) {
-  clearInterval(animation);
+  animation[user_id] = animation[user_id] || {}
+  clearInterval(animation[user_id].timer);
 };
