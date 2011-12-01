@@ -7,5 +7,6 @@ class DemoController < ApplicationController
   def test_index
     @identity = session[:identity]
     @use_local_js = true
+    render :index
   end
 end
