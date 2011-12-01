@@ -50,6 +50,8 @@ var Typer = function(broadcastRate, timeout, options) {
   }
 
   this.notTyping = function() {
-    stopTyping();
+    if (typing === true) {
+      stopTyping();
+    }
   }
 }
