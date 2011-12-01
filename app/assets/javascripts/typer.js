@@ -7,6 +7,10 @@ var Typer = function(broadcastRate, timeout, options) {
   var onStart = options.onStart || null;
   var onEnd = options.onEnd || null;
 
+  if (timeout < broadcastRate + 500) {
+    throw "Timeout is too low, should be at least 0.5s longer than broadcast rate"
+  }
+
   var typing = false;
   var lastActivity = null;
   var broadcastTimer = null;
