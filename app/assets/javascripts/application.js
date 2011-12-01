@@ -32,10 +32,14 @@ $().ready(function(){
   var typing;
 
   var typer = new Typer(2000, 5000, {
+    onStart: function() {
+      startAnimation(me);
+    },
     onTyping: function() {
       channel.trigger('client-typing', {user_id: me})
     },
     onEnd: function() {
+      stopAnimation(me);
       channel.trigger('client-notTyping', {user_id: me})
     }
   });
