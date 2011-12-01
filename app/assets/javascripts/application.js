@@ -33,13 +33,13 @@ $().ready(function(){
 
   var typer = new Typer(2000, 5000, {
     onStart: function() {
-      startAnimation(me);
+      showTyping(me);
     },
     onTyping: function() {
       channel.trigger('client-typing', {user_id: me})
     },
     onEnd: function() {
-      stopAnimation(me);
+      hideTyping(me);
       channel.trigger('client-notTyping', {user_id: me})
     }
   });
@@ -96,8 +96,8 @@ function add_member(member) {
 
   if (member.id != me) {
     member.info.typer = new Typer(2000, 5000, {
-      onStart: function() { startAnimation(member.id) },
-      onEnd: function() { stopAnimation(member.id) }
+      onStart: function() { showTyping(member.id) },
+      onEnd: function() { hideTyping(member.id) }
     })
   }
 
@@ -121,12 +121,21 @@ function speak(user_id, text) {
   }, 30000)
 }
 
-function startAnimation(user_id) {
-  startJiggle($("#presence_" + user_id)[0])
+function showTyping(user_id) {
+  var user = $("#presence_" + user_id)
+  var typing = $("<div>", {
+    "class": "typing",
+    text: '❞'
+  })
+  user.find(".typing").remove()
+  user.append(typing)
 };
 
-function stopAnimation(user_id) {
-  stopJiggle($("#presence_" + user_id)[0])
+function hideTyping(user_id) {
+  var user = $("#presence_" + user_id)
+  user.find(".typing").fadeOut(200, function() {
+    $(this).remove()
+  })
 };
 
 function startJiggle(node) {
