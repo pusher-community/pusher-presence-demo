@@ -5,12 +5,6 @@ Pusher.log = function() {
 };
 
 $().ready(function(){
-  $("#message").submit(function() {
-    $.post(this.action, $(this).serialize())
-    this.reset()
-    return false
-  })
-
   channel = socket.subscribe('presence-demo');
   channel.bind('pusher:subscription_succeeded', function(members){
     $('#presence').empty()
@@ -37,28 +31,36 @@ $().ready(function(){
   // var typing = false;
   var typing;
 
-  $("#message input[name=text]").keydown(function() {
-    if (typing) {
-      clearInterval(typing)
-    } else {
-      start_typing(me)
-      channel.trigger('client-starttyping', {})
+  var typer = new Typer(2000, 5000, {
+    onTyping: function() {
+      channel.trigger('client-typing', {user_id: me})
+    },
+    onEnd: function() {
+      channel.trigger('client-notTyping', {user_id: me})
     }
+  });
 
-    typing = setTimeout(function() {
-      stop_typing(me)
-      channel.trigger('client-stoptyping', {})
-      clearInterval(typing)
-      typing = null
-    }, 1000)
+  $("#message input[name=text]").keydown(function() {
+    typer.typing()
+  }).blur(function() {
+    typer.notTyping()
   })
 
-  channel.bind('client-starttyping', function(data) {
-    start_typing(data.user_id)
+  $("#message").submit(function() {
+    $.post(this.action, $(this).serialize())
+    this.reset()
+    typer.notTyping();
+    return false
   })
 
-  channel.bind('client-stoptyping', function(data) {
-    stop_typing(data.user_id)
+  channel.bind('client-typing', function(data) {
+    var member = channel.members.get(data.user_id)
+    member.info.typer.typing();
+  })
+
+  channel.bind('client-notTyping', function(data) {
+    var member = channel.members.get(data.user_id)
+    member.info.typer.notTyping();
   })
 });
 
@@ -88,6 +90,13 @@ function add_member(member) {
 
   if (member.id == me) container.addClass("me")
 
+  if (member.id != me) {
+    member.info.typer = new Typer(2000, 5000, {
+      onStart: function() { start_typing(member.id) },
+      onEnd: function() { stop_typing(member.id) }
+    })
+  }
+
   $('#presence').append(container.html(content))
 }
 
@@ -112,6 +121,9 @@ var animation
 var animation_counter = 0
 
 function start_typing(user_id) {
+  if (animation) {
+    clearInterval(animation)
+  }
   animation = setInterval(function() {
     animation_counter++
 
