@@ -121,25 +121,29 @@ function speak(user_id, text) {
   }, 30000)
 }
 
-var animation = {};
-
 function startAnimation(user_id) {
-  animation[user_id] = animation[user_id] || {}
-  if (animation[user_id].timer) {
-    clearInterval(animation[user_id].timer);
-  }
-  animation[user_id].timer = setInterval(function() {
-    animation[user_id].counter = animation[user_id].counter || 0;
-    animation[user_id].counter++;
-
-    var rotation = (animation[user_id].counter % 2 - 0.5) * 10
-    $("#presence_" + user_id).css({
-      "-webkit-transform": "rotate(" + rotation + "deg)"
-    });
-  }, 100);
+  startJiggle($("#presence_" + user_id)[0])
 };
 
 function stopAnimation(user_id) {
-  animation[user_id] = animation[user_id] || {}
-  clearInterval(animation[user_id].timer);
+  stopJiggle($("#presence_" + user_id)[0])
 };
+
+function startJiggle(node) {
+  if (node.timer) {
+    clearInterval(node.timer);
+  }
+  node.timer = setInterval(function() {
+    node.counter = node.counter || 0;
+    node.counter++;
+
+    var rotation = (node.counter % 2 - 0.5) * 10
+    $(node).css({
+      "-webkit-transform": "rotate(" + rotation + "deg)"
+    });
+  }, 100);
+}
+
+function stopJiggle(node) {
+  clearInterval(node.timer);
+}
