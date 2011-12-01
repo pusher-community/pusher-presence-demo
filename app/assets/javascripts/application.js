@@ -92,8 +92,8 @@ function add_member(member) {
 
   if (member.id != me) {
     member.info.typer = new Typer(2000, 5000, {
-      onStart: function() { start_typing(member.id) },
-      onEnd: function() { stop_typing(member.id) }
+      onStart: function() { startAnimation(member.id) },
+      onEnd: function() { stopAnimation(member.id) }
     })
   }
 
@@ -117,24 +117,23 @@ function speak(user_id, text) {
   }, 30000)
 }
 
-var animation
-var animation_counter = 0
+var animation = null;
+var animation_counter = 0;
 
-function start_typing(user_id) {
+function startAnimation(user_id) {
   if (animation) {
-    clearInterval(animation)
+    clearInterval(animation);
   }
   animation = setInterval(function() {
-    animation_counter++
+    animation_counter++;
 
     var rotation = (animation_counter % 2 - 0.5) * 10
     $("#presence_" + user_id).css({
       "-webkit-transform": "rotate(" + rotation + "deg)"
-    })
-  }, 100)
+    });
+  }, 100);
+};
 
-}
-
-function stop_typing(user_id) {
-  clearInterval(animation)
-}
+function stopAnimation(user_id) {
+  clearInterval(animation);
+};
