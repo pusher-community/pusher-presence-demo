@@ -28,10 +28,7 @@ $().ready(function(){
     speak(data.user_id, data.text)
   })
 
-  // var typing = false;
-  var typing;
-
-  var typer = new Typer(2000, 5000, {
+  var typer = new Typer({
     onStart: function() {
       showTyping(me);
     },
@@ -44,16 +41,11 @@ $().ready(function(){
     }
   });
 
-  $("#message input[name=text]").keydown(function() {
-    typer.typing()
-  }).blur(function() {
-    typer.notTyping()
-  })
+  $("#message input[name=text]").monitor(typer);
 
   $("#message").submit(function() {
     $.post(this.action, $(this).serialize())
     this.reset()
-    typer.notTyping();
     return false
   })
 
@@ -95,7 +87,7 @@ function add_member(member) {
   if (member.id == me) container.addClass("me")
 
   if (member.id != me) {
-    member.info.typer = new Typer(2000, 5000, {
+    member.info.typer = new Typer({
       onStart: function() { showTyping(member.id) },
       onEnd: function() { hideTyping(member.id) }
     })

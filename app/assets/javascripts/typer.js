@@ -1,9 +1,7 @@
-var Typer = function(broadcastRate, timeout, options) {
-  var self = this;
-  var broadcastRate = broadcastRate;
-  var timeout = timeout;
+var Typer = function(options) {
+  var broadcastRate = options.broadcastRate || 4000;
+  var timeout = options.timeout || 5000;
   var onTyping = options.onTyping || null;
-  var broadcastEnd = options.broadcastEnd || null;
   var onStart = options.onStart || null;
   var onEnd = options.onEnd || null;
 
@@ -33,7 +31,7 @@ var Typer = function(broadcastRate, timeout, options) {
   }
 
   var registerActivity = function() {
-    lastActivity = (new Date()).getTime()
+    lastActivity = Date.now();
     if (timeoutTimer) {
       clearTimeout(timeoutTimer);
     }
@@ -54,4 +52,19 @@ var Typer = function(broadcastRate, timeout, options) {
       stopTyping();
     }
   }
+}
+
+$.fn.monitor = function(typer) {
+  // var typer = $(this).data("typer") || $(this).data("typer", new Typer(2000))
+  // if (typerName)
+
+  $(this).keypress(function() {
+    typer.typing();
+  }).blur(function() {
+    typer.notTyping();
+  })
+
+  $(this).parents('form').submit(function() {
+    typer.notTyping();
+  })
 }
