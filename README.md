@@ -8,7 +8,7 @@ There are two branches which demonstrate some different approaches:
 
 * `send_messages_with_client_events`: Uses [client events](http://pusher.com/docs/client_events) to send chat messages rather than an ajax call to the rails app. This reduces latency but means that persistence isn't possible on the server. It also uses client events to send typing notifications to other browsers which is a nice use case for client events. Note: This will only work for you if client events have been enabled for your app.
 
-Before running locally, add some Pusher credentials to `config/environments/development.rb`. Then run with
+Before running locally, add some Pusher credentials to `config/initializers/pusher_init.rb`. Then run with
 
     script/rails server
 
