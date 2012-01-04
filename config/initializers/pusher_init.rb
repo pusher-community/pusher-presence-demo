@@ -4,6 +4,6 @@
 # Pusher.secret = ''
 
 # not strictly necessary, but referenced in views
-PUSHER_JS_DOMAIN = 'http://js.pusherapp.com'
+PUSHER_JS_DOMAIN = 'http://js.pusher.com'
 PUSHER_SOCKET_HOST = 'ws.pusherapp.com'
 PUSHER_WS_PORT = 80
