@@ -1,7 +1,7 @@
 //= require_tree .
 
-Pusher.log = function() {
-  if (window.console) window.console.log.apply(window.console, arguments);
+Pusher.log = function(message) {
+  if (window.console && window.console.log) window.console.log(message);
 };
 
 $().ready(function(){
