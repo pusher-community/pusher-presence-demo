@@ -4,10 +4,11 @@ class PusherController < ApplicationController
     raise "Unknown channel" unless params[:channel_name] == 'presence-demo'
 
     channel = Pusher['presence-demo']
+    session[:user_id] ||= rand(1000000)
 
     if identity = session[:identity]
       response = channel.authenticate(params[:socket_id], {
-        :user_id => session[:session_id],
+        :user_id => session[:user_id],
         :user_info => {
           :gravatar => identity[:gravatar]
         }
@@ -16,7 +17,7 @@ class PusherController < ApplicationController
     else
       # We're allowing anonymous users
       response = channel.authenticate(params[:socket_id], {
-        :user_id => session[:session_id] || rand(100000),
+        :user_id => session[:user_id],
         :user_info => {}
       })
       render :json => response
