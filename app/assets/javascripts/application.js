@@ -30,14 +30,18 @@ $().ready(function(){
 
   var typer = new Typer({
     onStart: function() {
-      showTyping(me);
+      showTyping(channel.members.me.id);
     },
     onTyping: function() {
-      channel.trigger('client-typing', {user_id: me})
+      if(channel.subscribed) {
+        channel.trigger('client-typing', {user_id: channel.members.me.id})
+      }
     },
     onEnd: function() {
-      hideTyping(me);
-      channel.trigger('client-notTyping', {user_id: me})
+      hideTyping(channel.members.me.id);
+      if(channel.subscribed) {
+        channel.trigger('client-notTyping', {user_id: channel.members.me.id})
+      }
     }
   });
 
@@ -77,16 +81,18 @@ function add_member(member) {
       src: member.info.gravatar,
       valign: "middle"
     })
-  } else if (member.id == me) {
+  } else if (member.id == channel.members.me.id) {
     container.addClass("no-gravatar")
     content = 'you are here'
   } else {
     content = null
   }
 
-  if (member.id == me) container.addClass("me")
+  if (member.id == channel.members.me.id) {
+    container.addClass("me")
+  }
 
-  if (member.id != me) {
+  if (member.id != channel.members.me.id) {
     member.info.typer = new Typer({
       onStart: function() { showTyping(member.id) },
       onEnd: function() { hideTyping(member.id) }

@@ -7,7 +7,7 @@
 <% if @use_local_js %>
   <script src="http://localhost:5555/pusher.js"></script>
 <% else %>
-  <script src="<%= PUSHER_JS_DOMAIN %>/1.11/pusher.min.js"></script>
+  <script src="<%= PUSHER_JS_DOMAIN %>/1.12.0-pre/pusher.min.js"></script>
 <% end %>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -16,7 +16,6 @@
   Pusher.host = '<%= PUSHER_SOCKET_HOST %>';
   Pusher.ws_port = <%= PUSHER_WS_PORT %>;
 
-  var me = '<%= session[:session_id] %>'
   var socket = new Pusher('<%= Pusher.key %>');
 </script>
 </head>
